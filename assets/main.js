@@ -16,7 +16,7 @@ xmax = (canvas.offsetLeft + canvas.offsetWidth) - cnvs_offset;
 
 var game = {
   bgcolor: "#282c34",
-  speed: 10
+  speed: 9
 }
 
 
@@ -29,6 +29,15 @@ var player = {
   dy: 0,
   spdx: 5,
   spdy: 5,
+  init: function(x=this.x,y=this.y,size=this.size,color=this.color){
+    this.x=x;
+    this.y=y;
+    this.size=size;
+    this.color = color;
+    if(!this.intrvl){
+      this.interval = setInterval(move, game.speed,this);
+    }
+  },
   move: function() {
     // clear older instance
 
@@ -48,17 +57,12 @@ var player = {
   }
 }
 
-cx.fillStyle = "red";
-cx.fillRect(canvas.width, 200, 70, 70);
-
-function move() {
-  player.move();
+function move(pl) {
+  pl.move();
 }
 
+
 window.addEventListener("keyup", keyPressed, false);
-
-
-setInterval(move, game.speed);
 function keyPressed(e) {
 
   _dx = 0;
@@ -88,7 +92,27 @@ function keyPressed(e) {
 
   }
 
-  player.dx = player.spdx * _dx;
-  player.dy = player.spdy * _dy;
+  p1.dx = p1.spdx * _dx;
+  p1.dy = p1.spdy * _dy;
+
+  p2.dx = p2.spdx * _dx*-1;
+  p2.dy = p2.spdy * _dy*-1;
 
 }
+
+function Copy(src) {
+  let target = {};
+  for (let prop in src) {
+    if (src.hasOwnProperty(prop)) {
+      target[prop] = src[prop];
+    }
+  }
+  return target;
+}
+
+
+p1 = Copy(player);
+p1.init();
+
+p2 = Copy(player);
+p2.init(player.x+50,player.y+50,player.size,"#25337A");
