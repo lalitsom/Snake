@@ -114,5 +114,5 @@ function Copy(src) {
 p1 = Copy(player);
 p1.init();
 
-p2 = Copy(player);
-p2.init(player.x+50,player.y+50,player.size,"#25337A");
+// p2 = Copy(player);
+// p2.init(player.x+50,player.y+50,player.size,"#25337A");
